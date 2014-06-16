@@ -7,5 +7,7 @@
     <string name="current_class">Current Class</string>
     <string name="default_class">Warrior</string>
     <string name="soul_level">Soul Level</string>
+    <string name="class_selection">Choose new starting class</string>
+    <string name="cancel_class_selection">Cancel</string>
 
 </resources>

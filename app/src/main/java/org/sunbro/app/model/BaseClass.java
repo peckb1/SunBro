@@ -17,7 +17,7 @@ public enum BaseClass {
     EXPLORER(7, 6, 9, 12, 6, 6, 5, 5, 7),
     DEPRIVED(6, 6, 6, 6, 6, 6, 6, 6, 6);
 
-    private static final int BASE_SOUL_LEVEL = 53;
+    private static final int BASE_SOUL_LEVEL = -53;
     private static final String TAG = BaseClass.class.getSimpleName();
 
     private final Map<Stat, Integer> baseStats = Maps.newEnumMap(Stat.class);
@@ -38,14 +38,20 @@ public enum BaseClass {
     }
 
     public int getSoulLevel() {
-        int soulLevel = 0;
+        int soulLevel = BASE_SOUL_LEVEL;
         for(int value: baseStats.values()) {
             soulLevel = soulLevel + value;
         }
-        return soulLevel - BASE_SOUL_LEVEL;
+        return soulLevel;
     }
 
     public int getStatValue(Stat stat) {
         return baseStats.get(stat);
+    }
+
+    @Override
+    public String toString() {
+        String word = super.toString();
+        return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 }

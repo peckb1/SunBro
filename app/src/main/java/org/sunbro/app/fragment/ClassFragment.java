@@ -25,6 +25,7 @@ import org.sunbro.app.model.Stat;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
+import static android.app.AlertDialog.Builder;
 import static android.content.DialogInterface.OnClickListener;
 
 public class ClassFragment extends Fragment {
@@ -82,7 +83,7 @@ public class ClassFragment extends Fragment {
     }
 
     private Dialog createClassSelectionDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        Builder builder = new Builder(getActivity());
 
         ArrayList<String> classNames = Lists.newArrayList();
         for(BaseClass baseClass : classes) {
@@ -91,13 +92,13 @@ public class ClassFragment extends Fragment {
         String[] names = new String[classNames.size()];
         classNames.toArray(names);
 
-        builder.setTitle("SELECT CLASS")
+        builder.setTitle(R.string.class_selection)
                 .setItems(names, new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         setSelectedClass(classes.get(which));
                     }
                 })
-                .setNegativeButton("CANCEL", new OnClickListener() {
+                .setNegativeButton(R.string.cancel_class_selection, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}
                 });
