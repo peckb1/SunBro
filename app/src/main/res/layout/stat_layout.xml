@@ -9,9 +9,14 @@
     <TextView android:id="@+id/stat_layout_name"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_weight="1"
+              android:layout_weight="3"
               android:textSize="20sp"
-              android:text=""/>
+              android:text="Endurance"/>
+
+    <ImageButton android:id="@+id/stat_decrease_level"
+                 android:layout_width="30dp"
+                 android:layout_height="30dp"
+                 android:src="@drawable/ic_action_expand"/>
 
     <TextView android:id="@+id/stat_layout_value"
               android:layout_width="0dp"
@@ -19,6 +24,11 @@
               android:layout_weight="1"
               android:textSize="20sp"
               android:gravity="center_horizontal"
-              android:text=""/>
+              android:text="15"/>
+
+    <ImageButton android:id="@+id/stat_increase_level"
+                 android:layout_width="30dp"
+                 android:layout_height="30dp"
+                 android:src="@drawable/ic_action_collapse"/>
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import java.util.EnumSet;
 
 import static android.app.AlertDialog.Builder;
 import static android.content.DialogInterface.OnClickListener;
+import static android.view.View.INVISIBLE;
 
 public class ClassFragment extends Fragment {
 
@@ -73,9 +75,13 @@ public class ClassFragment extends Fragment {
     private void setSoulLevel() {
         TextView soulLevelName = ButterKnife.findById(soulLevelLayout, R.id.stat_layout_name);
         TextView soulLevelValue = ButterKnife.findById(soulLevelLayout, R.id.stat_layout_value);
+        ImageButton lowerStat = ButterKnife.findById(soulLevelLayout, R.id.stat_decrease_level);
+        ImageButton raiseStat = ButterKnife.findById(soulLevelLayout, R.id.stat_increase_level);
 
         soulLevelName.setText(getResources().getText(R.string.soul_level));
         soulLevelValue.setText(String.format("%d", selectedClass.getSoulLevel()));
+        lowerStat.setVisibility(INVISIBLE);
+        raiseStat.setVisibility(INVISIBLE);
     }
 
     private void setClassTitle() {

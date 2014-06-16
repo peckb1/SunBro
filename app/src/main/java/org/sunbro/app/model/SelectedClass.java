@@ -40,5 +40,12 @@ public class SelectedClass {
         }
     }
 
+    public void increase(Stat stat) {
+        raisedStats.put(stat, raisedStats.get(stat) + 1);
+    }
+
+    public void decrease(Stat stat) {
+        raisedStats.put(stat, raisedStats.get(stat) - 1);
+    }
 }
 
