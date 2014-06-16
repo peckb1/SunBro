@@ -10,4 +10,10 @@ public enum Stat {
     INTELLIGENCE,
     FAITH,
     ATTUNEMENT;
+
+    @Override
+    public String toString() {
+        String word = super.toString();
+        return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+    }
 }

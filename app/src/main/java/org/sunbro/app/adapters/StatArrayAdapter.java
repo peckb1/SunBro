@@ -39,13 +39,9 @@ public class StatArrayAdapter extends ArrayAdapter<Stat> {
         TextView name = ButterKnife.findById(rowView, R.id.stat_layout_name);
         TextView value = ButterKnife.findById(rowView, R.id.stat_layout_value);
 
-        name.setText(toCamelCase(stat.toString()));
+        name.setText(stat.toString());
         value.setText(String.format("%d", selectedClass.getRaisedStatValue(stat)));
 
         return rowView;
-    }
-
-    private String toCamelCase(String word) {
-        return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 }

@@ -26,6 +26,10 @@ public class SelectedClass {
         return soulLevel;
     }
 
+    public BaseClass getBaseClass() {
+        return this.baseClass;
+    }
+
     public int getRaisedStatValue(Stat stat) {
         return (baseClass.getStatValue(stat) + raisedStats.get(stat));
     }
