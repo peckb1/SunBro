@@ -11,7 +11,7 @@
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:textSize="20sp"
-              android:text="name"/>
+              android:text=""/>
 
     <TextView android:id="@+id/stat_layout_value"
               android:layout_width="0dp"
@@ -19,6 +19,6 @@
               android:layout_weight="1"
               android:textSize="20sp"
               android:gravity="center_horizontal"
-              android:text="45"/>
+              android:text=""/>
 
 </LinearLayout>

@@ -4,5 +4,8 @@
     <string name="app_name">SunBro</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="current_class">Current Class</string>
+    <string name="default_class">Warrior</string>
+    <string name="soul_level">Soul Level</string>
 
 </resources>
