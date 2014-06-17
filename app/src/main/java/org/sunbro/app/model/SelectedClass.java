@@ -30,7 +30,7 @@ public class SelectedClass {
         return this.baseClass;
     }
 
-    public int getRaisedStatValue(Stat stat) {
+    public int getCurrentStatValue(Stat stat) {
         return (baseClass.getStatValue(stat) + raisedStats.get(stat));
     }
 

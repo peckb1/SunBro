@@ -1,7 +1,6 @@
 package org.sunbro.app.adapters;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import org.sunbro.app.R;
+import org.sunbro.app.events.StatChangeEvent;
 import org.sunbro.app.model.SelectedClass;
 import org.sunbro.app.model.Stat;
+import rx.subjects.PublishSubject;
 
 import static android.view.View.OnClickListener;
 
@@ -21,11 +22,14 @@ public class StatArrayAdapter extends ArrayAdapter<Stat> {
 
     private final Activity activity;
     private final SelectedClass selectedClass;
+    private final PublishSubject<StatChangeEvent> statChangedSubject;
 
-    public StatArrayAdapter(Activity activity, Stat[] stats, SelectedClass selectedClass) {
+    public StatArrayAdapter(Activity activity, Stat[] stats, SelectedClass selectedClass,
+                            PublishSubject<StatChangeEvent> statChangedSubject) {
         super(activity, R.layout.stat_layout, stats);
         this.activity = activity;
         this.selectedClass = selectedClass;
+        this.statChangedSubject = statChangedSubject;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class StatArrayAdapter extends ArrayAdapter<Stat> {
         ImageButton raiseStat = ButterKnife.findById(rowView, R.id.stat_increase_level);
 
         name.setText(stat.toString());
-        value.setText(String.format("%d", selectedClass.getRaisedStatValue(stat)));
+        value.setText(String.format("%d", selectedClass.getCurrentStatValue(stat)));
 
         setupListeners(lowerStat, raiseStat, value, stat);
 
@@ -64,7 +68,9 @@ public class StatArrayAdapter extends ArrayAdapter<Stat> {
                 }
                 raiseStat.setClickable(true);
 
-                value.setText(String.format("%d", selectedClass.getRaisedStatValue(stat)));
+                int newValue = selectedClass.getCurrentStatValue(stat);
+                value.setText(String.format("%d", newValue));
+                statChangedSubject.onNext(StatChangeEvent.create(stat, newValue));
             }
         });
         raiseStat.setOnClickListener(new OnClickListener() {
@@ -76,7 +82,9 @@ public class StatArrayAdapter extends ArrayAdapter<Stat> {
                     raiseStat.setClickable(false);
                 }
 
-                value.setText(String.format("%d", selectedClass.getRaisedStatValue(stat)));
+                int newValue = selectedClass.getCurrentStatValue(stat);
+                value.setText(String.format("%d", newValue));
+                statChangedSubject.onNext(StatChangeEvent.create(stat, newValue));
             }
         });
 
@@ -90,11 +98,11 @@ public class StatArrayAdapter extends ArrayAdapter<Stat> {
     }
 
     private boolean canIncrease(Stat stat) {
-        return !(selectedClass.getRaisedStatValue(stat) == 99);
+        return !(selectedClass.getCurrentStatValue(stat) == 99);
     }
 
     private boolean canDecrease(Stat stat) {
-        return !(selectedClass.getRaisedStatValue(stat) == selectedClass.getBaseClass().getStatValue(stat));
+        return !(selectedClass.getCurrentStatValue(stat) == selectedClass.getBaseClass().getStatValue(stat));
     }
 
     @Override

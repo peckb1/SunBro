@@ -46,4 +46,6 @@ dependencies {
     compile "com.squareup.dagger:dagger-compiler:${dagger_version}"
 
     compile 'com.jakewharton:butterknife:5.1.0'
+
+    compile 'com.netflix.rxjava:rxjava-android:0.19.1'
 }

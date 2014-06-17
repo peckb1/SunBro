@@ -1,6 +1,5 @@
 package org.sunbro.app.model;
 
-import android.util.Log;
 import com.google.common.collect.Maps;
 
 import java.util.Map;

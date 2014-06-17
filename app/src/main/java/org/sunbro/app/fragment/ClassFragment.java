@@ -1,11 +1,9 @@
 package org.sunbro.app.fragment;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +17,13 @@ import butterknife.OnClick;
 import com.google.common.collect.Lists;
 import org.sunbro.app.R;
 import org.sunbro.app.adapters.StatArrayAdapter;
+import org.sunbro.app.events.StatChangeEvent;
 import org.sunbro.app.model.BaseClass;
 import org.sunbro.app.model.SelectedClass;
 import org.sunbro.app.model.Stat;
+import rx.Subscription;
+import rx.functions.Action1;
+import rx.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -37,6 +39,10 @@ public class ClassFragment extends Fragment {
     @InjectView(R.id.select_class_stat_list) ListView statsList;
     @InjectView(R.id.select_class_soul_level_layout) LinearLayout soulLevelLayout;
     @InjectView(R.id.select_class_text_view) TextView currentClassText;
+
+    private final PublishSubject<StatChangeEvent> statChangeSubject = PublishSubject.create();
+
+    private Subscription statChangeSubscription;
 
     @OnClick(R.id.select_class_layout) void submit() {
         Dialog dialog = createClassSelectionDialog();
@@ -69,14 +75,23 @@ public class ClassFragment extends Fragment {
         Stat[] stats = new Stat[statsSet.size()];
         statsSet.toArray(stats);
 
-        statsList.setAdapter(new StatArrayAdapter(getActivity(), stats, selectedClass));
+        statsList.setAdapter(new StatArrayAdapter(getActivity(), stats, selectedClass, statChangeSubject));
     }
 
     private void setSoulLevel() {
         TextView soulLevelName = ButterKnife.findById(soulLevelLayout, R.id.stat_layout_name);
-        TextView soulLevelValue = ButterKnife.findById(soulLevelLayout, R.id.stat_layout_value);
+        final TextView soulLevelValue = ButterKnife.findById(soulLevelLayout, R.id.stat_layout_value);
         ImageButton lowerStat = ButterKnife.findById(soulLevelLayout, R.id.stat_decrease_level);
         ImageButton raiseStat = ButterKnife.findById(soulLevelLayout, R.id.stat_increase_level);
+
+        if(statChangeSubscription == null || statChangeSubscription.isUnsubscribed()) {
+            statChangeSubscription = statChangeSubject.subscribe(new Action1<StatChangeEvent>() {
+                @Override
+                public void call(StatChangeEvent statChangeEvent) {
+                    soulLevelValue.setText(String.format("%d", selectedClass.getSoulLevel()));
+                }
+            });
+        }
 
         soulLevelName.setText(getResources().getText(R.string.soul_level));
         soulLevelValue.setText(String.format("%d", selectedClass.getSoulLevel()));
