@@ -27,7 +27,7 @@
 -keep class **$$ModuleAdapter
 -keep class **$$InjectAdapter
 -keep class **$$StaticInjection
--keepnames !abstract class com.example.mypackage.**
+-keepnames !abstract class org.sunpbro.app.**
 -keepnames class dagger.Lazy
 # Gradle includes dagger-compiler and javawriter in the final package
 -dontwarn dagger.internal.codegen.**
